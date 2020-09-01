@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 struct __person
@@ -14,12 +15,40 @@ struct __person
 
 typedef struct __person PERSON;
 
+void debug(vector<PERSON> man, vector<PERSON> woman)
+{
+	int i = 0;
+	for(auto w : woman)
+	{
+		cout << i + 1 << ": ";
+		i++;
+		for(auto p : w.pref)
+		{
+			cout << p << " ";
+		}
+		cout << "\n";
+	}
+	cout << "\n";
+	i = 0;
+	for(auto m : man)
+	{
+		cout << i + 1 << ": ";
+		i++;
+		for(auto p : m.pref)
+		{
+			cout << p << " ";
+		}
+		cout << "\n";
+	}
+}
+
 bool isEveryManMarried(vector<PERSON> man)
 {
 	bool isEveryoneMarried = true;
-	for(int i = 0; i < man.size() && isEveryoneMarried; i++)
+	//for(i = 0; i < man.size() && isEveryoneMarried; i++)
+	for(auto m : man)
 	{
-		if(man[i].status == PERSON::SINGLE) isEveryoneMarried = false;
+		if(m.status == PERSON::SINGLE) isEveryoneMarried = false;
 	}
 	return isEveryoneMarried;
 }
@@ -59,11 +88,11 @@ int main(void)
 		for(i = 0; i < marriages; i++)
 		{
 			cin >> aux;
+			PERSON w;
+			woman.push_back(w);
 			for(j = 0; j < marriages; j++)
 			{
 				cin >> aux;
-				PERSON w;
-				woman.push_back(w);
 				woman[i].pref.push_back(aux);
 				woman[i].status = PERSON::SINGLE;
 			}
@@ -72,35 +101,17 @@ int main(void)
 		for(i = 0; i < marriages; i++)
 		{
 			cin >> aux;
+			PERSON m;
+			man.push_back(m);
 			for(j = 0; j < marriages; j++)
 			{
 				cin >> aux;
-				PERSON m;
-				man.push_back(m);
 				man[i].pref.push_back(aux);
 				man[i].status = PERSON::SINGLE;
 			}
 		}
-		//propose(man, woman);
-		for(i = 0; i < marriages; i++)
-		{
-			cout << i << ": ";
-			for(j = 0; j < man.size(); j++)
-			{
-				cout << man[i].pref[j] << " ";
-			}
-			cout << "\n";
-		}
-		cout << "\n";
-		for(i = 0; i < marriages; i++)
-		{
-			cout << i << ": ";
-			for(j = 0; j < man.size(); j++)
-			{
-				cout << woman[i].pref[j] << " ";
-			}
-			cout << "\n";
-		}
+		propose(man, woman);
+		//debug(man, woman);
 		cont++;
 		man.clear();
 		woman.clear();
