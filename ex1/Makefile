@@ -2,7 +2,7 @@ CC=g++
 BINARY=./ex1.bin
 SRC= ex1.cpp
 OPTIONS=-Wall -g
-TEST=casos/1.in
+TEST=casos/2.in
 
 all:
 	@$(CC) $(SRC) -o $(BINARY) $(OPTIONS)
