@@ -1,7 +1,7 @@
 CC=g++
 BINARY=./ex1.bin
 SRC= ex1.cpp
-OPTIONS=-Wall -g
+OPTIONS=-Wall -g -Werror
 TEST=casos/2.in
 TEST=teste.in
 
