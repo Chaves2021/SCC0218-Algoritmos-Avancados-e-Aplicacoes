@@ -18,7 +18,7 @@ struct __person
 
 typedef struct __person PERSON;
 
-void read_input(vector<PERSON>& man, vector<PERSON>& woman)
+void read_input(vector<PERSON> &man, vector<PERSON> &woman)
 {
 	int i, j;
 	int marriages;
@@ -32,8 +32,9 @@ void read_input(vector<PERSON>& man, vector<PERSON>& woman)
 		for(j = 0; j < marriages; j++)
 		{
 			cin >> aux;
-			woman[i].pref.push_back(aux);
+			woman[i].pref.push_back(aux - 1);
 			woman[i].status = PERSON::SINGLE;
+			woman[i].pair = -2;
 		}
 
 	}
@@ -45,43 +46,26 @@ void read_input(vector<PERSON>& man, vector<PERSON>& woman)
 		for(j = 0; j < marriages; j++)
 		{
 			cin >> aux;
-			man[i].pref.push_back(aux);
+			man[i].pref.push_back(aux - 1);
 			man[i].status = PERSON::SINGLE;
+			man[i].pair = -2;
 		}
 	}
 }
 
 void print_results(vector<PERSON> man, vector<PERSON> woman)
 {
-	int i = 0;
-	for(auto m : man)
+	unsigned long int i;
+	for(i = 0; i < man.size(); i++)
 	{
-		cout << i + 1 << ": ";
-		i++;
-		for(auto p : m.pref)
-		{
-			cout << p << " ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-	i = 0;
-	for(auto w : woman)
-	{
-		cout << i + 1 << ": ";
-		i++;
-		for(auto p : w.pref)
-		{
-			cout << p << " ";
-		}
-		cout << "\n";
+		cout << i + 1 << " " << man[i].pair  + 1<< "\n";
 	}
 }
 
 int isEveryManMarried(vector<PERSON> man)
 {
 	bool single = true;
-	int i;
+	unsigned long int i;
 	for(i = 0; i < man.size() && single; i++)
 	{
 		if(man[i].status == PERSON::SINGLE) single = false;
@@ -90,9 +74,9 @@ int isEveryManMarried(vector<PERSON> man)
 	return i - 1;
 }
 
-bool shePrefersAnother(vector<PERSON> man, vector<PERSON> woman, int index0, int index1)
+bool shePrefersAnother(vector<PERSON> &man, vector<PERSON> woman, int index0, int index1)
 {
-	int i;
+	unsigned long int i;
 	for(i = 0; i < man.size(); i++)
 	{
 		if(woman[man[index0].pref[index1]].pref[i] == woman[man[index0].pref[index1]].pair)
@@ -100,14 +84,16 @@ bool shePrefersAnother(vector<PERSON> man, vector<PERSON> woman, int index0, int
 		if(woman[man[index0].pref[index1]].pref[i] == index0)
 		{
 			man[woman[man[index0].pref[index1]].pair].status = PERSON::SINGLE;
+			man[woman[man[index0].pref[index1]].pair].pair = -1;
 			return true;
 		}
 	}
+	return false;
 }
 
-void __propose(vector<PERSON> man, vector<PERSON> woman, int index)
+void __propose(vector<PERSON> &man, vector<PERSON> &woman, int index)
 {
-	int i;
+	unsigned long int i;
 	bool getEngaged = false;
 	for(i = 0; i < man.size() && !getEngaged; i++)
 	{
@@ -117,6 +103,7 @@ void __propose(vector<PERSON> man, vector<PERSON> woman, int index)
 			man[index].status = PERSON::ENGAGED;
 			woman[man[index].pref[i]].pair = index;
 			woman[man[index].pref[i]].status = PERSON::ENGAGED;
+			getEngaged = true;
 		}
 		else if(shePrefersAnother(man, woman, index, i))
 		{
@@ -124,14 +111,15 @@ void __propose(vector<PERSON> man, vector<PERSON> woman, int index)
 			man[index].status = PERSON::ENGAGED;
 			woman[man[index].pref[i]].pair = index;
 			woman[man[index].pref[i]].status = PERSON::ENGAGED;
+			getEngaged = true;
 		}
 	}
 }
 
-void propose(vector<PERSON> man, vector<PERSON> woman)
+void propose(vector<PERSON> &man, vector<PERSON> &woman)
 {
 	int index = isEveryManMarried(man);
-	int i;
+	unsigned long int i;
 	while(index != NOT_SINGLE)
 	{
 		for(i = 0; i < man.size(); i++)
@@ -151,7 +139,7 @@ int main(void)
 	cin >> tests;
 	while(tests--)
 	{
-		read_input(&man, &woman);
+		read_input(man, woman);
 		propose(man, woman);
 		print_results(man, woman);
 		man.clear();
