@@ -18,6 +18,7 @@ int withdraw(vector<int> coins, int n_types)
 			n_coins++;
 		}
 	}
+	//It's returns the number of coins + 1 because you always get the last coin
 	return n_coins + 1;
 }
 
