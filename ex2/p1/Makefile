@@ -9,10 +9,10 @@ all:
 	@$(CC) $(SRC) -o $(BINARY) $(OPTIONS)
 run:
 	@$(BINARY) #< $(TEST)
-debug:
+valgrind:
 	@$(CC) $(OPTIONS) $(SRC) -o $(BINARY)
 	@valgrind --leak-check=yes $(BINARY)
-debug2:
+fsanitize:
 	@$(CC) $(OPTIONS) $(SRC) -fsanitize=address -o $(BINARY)
 	@$(BINARY) < $(TEST)
 zip:
