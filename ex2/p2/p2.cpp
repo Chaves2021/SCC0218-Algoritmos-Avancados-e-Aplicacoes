@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
@@ -33,6 +34,7 @@ int read_input(vector<int> &specimens_weight)
 int __print_output(int left, int right, int chamber, float imbalance)
 {
 	cout << " " << chamber << ": ";
+	//Does not print duplicated
 	if(left <= right)
 	{
 		if(right && left && right != left) cout << left << " " << right << endl;
@@ -51,10 +53,12 @@ int print_output(vector<int> specimens_weight, float imbalance, int n_chambers)
 	{
 		__print_output(specimens_weight[i], specimens_weight[specimens_weight.size() - i - 1], i, imbalance);
 	}
-	cout << "IMBALANCE = " << imbalance << endl;
+	cout << fixed;
+	cout << "IMBALANCE = " << setprecision(5) << imbalance << endl;
 	return SUCCESS;
 }
 
+//The function returns the imbalance value
 float balance(int n_chambers, vector<int> &specimens_weight)
 {
 	int i;
@@ -92,7 +96,7 @@ int main(void)
 	{
 		cout << "Set #" << ++aux << endl; 
 		read_input(specimens_weight);
-		imbalance = (float) balance(n_chambers, specimens_weight);
+		imbalance = balance(n_chambers, specimens_weight);
 		print_output(specimens_weight, imbalance, n_chambers);
 		specimens_weight.clear();
 		cout << endl;

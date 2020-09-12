@@ -2,7 +2,7 @@ CC=g++
 BINARY=./p2.bin
 SRC= p2.cpp
 OPTIONS=-Wall -g -Werror
-TEST=teste2.in
+TEST=teste.in
 
 all:
 	@$(CC) $(SRC) -o $(BINARY) $(OPTIONS)
