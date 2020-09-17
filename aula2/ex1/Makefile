@@ -1,15 +1,14 @@
 CC=g++
-BINARY=./p2.bin
-SRC= p2.cpp
+BINARY=./ex1.bin
+SRC= ex1.cpp
 OPTIONS=-Wall -g -Werror
+TEST=casos/2.in
 TEST=teste.in
 
 all:
 	@$(CC) $(SRC) -o $(BINARY) $(OPTIONS)
 run:
-	@$(BINARY)
-test:
-	@$(BINARY) < $(TEST)
+	@$(BINARY) #< $(TEST)
 valgrind:
 	@$(CC) $(OPTIONS) $(SRC) -o $(BINARY)
 	@valgrind --leak-check=yes $(BINARY)
